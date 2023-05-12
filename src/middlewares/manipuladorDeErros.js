@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import ErroBase from "../erros/ErroBase.js";
 import RequisicaoIncorreta from "../erros/RequisicaoIncorreta.js";
-import ErroValidacao from "../erros/ErroValiacao.js";
+import ErroValidacao from "../erros/ErroValidacao.js";
 import NaoEncontrado from "../erros/NaoEncontrado.js";
 
 // eslint-disable-next-line no-unused-vars
