@@ -82,7 +82,7 @@ class LivroController {
       const busca = await processaBusca(req.query);
 
       if (busca !== null) {
-        const livroResultado = livros;
+        const livroResultado = livros.find(busca);
 
         req.resultado = livroResultado;
   
