@@ -5,10 +5,12 @@ class LivroController {
 
   static listarLivros = async (req, res, next) => {
     try {
-      const livroResultado = await livros.find()
-        .populate("autor")
-        .exec();
-      res.status(200).json(livroResultado);
+      const buscaLivros = livros.find();
+
+      req.resultado = buscaLivros;
+
+      next();
+
     } catch (erro) {
       next(erro);
     }
@@ -17,9 +19,10 @@ class LivroController {
   static listarLivroPorId = async (req, res, next) => {
     try {
       const id = req.params.id;
-      const livroResultado = await livros.findById(id)
-        .populate("autor", "nome")
-        .exec();
+      const livroResultado = await livros
+        .findById(id, {}, { autopopulate: false })
+        .populate("autor");
+      // const livroResultado = await livros.findById(id, {}, { autopopulate: false }); //Pra remover a funcão autopopulate do método listarLivroPorId
       
       if (livroResultado !== null) {
         res.status(200).send(livroResultado);
@@ -79,12 +82,11 @@ class LivroController {
       const busca = await processaBusca(req.query);
 
       if (busca !== null) {
-        const livroResultado = await livros
-          .find(busca)
-          .populate("autor");
-  
-        res.status(200).send(livroResultado);
+        const livroResultado = livros;
 
+        req.resultado = livroResultado;
+  
+        next();
       } else {
         res.status(200).send("O(a) autor(a) informado(a) não possui livros cadastrados.");
       }
